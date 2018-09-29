@@ -1,0 +1,35 @@
+{
+  "name": "adarshchat",
+  "version": "1.0.0",
+  "description": "Simple chat system",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Adarsh Shetty",
+  "license": "NO_Lisence",
+  "dependencies": {
+    "app": "^0.1.0",
+    "bcryptjs": "*",
+    "body-parser": "*",
+    "bufferutil": "4.0.0",
+    "connect": "^3.6.6",
+    "connect-flash": "*",
+    "connect-mongo": "^2.0.1",
+    "cookie-parser": "^1.4.1",
+    "csurf": "^1.9.0",
+    "express": "4.16.3",
+    "express-handlebars": "^3.0.0",
+    "express-messages": "*",
+    "express-session": "^1.15.6",
+    "express-validator": "^5.3.0",
+    "mongoose": "*",
+    "morgan": "^1.9.0",
+    "passport": "^0.4.0",
+    "passport-http": "*",
+    "passport-local": "^1.0.0",
+    "socket.io": "2.1.1",
+    "utf-8-validate": "5.0.1"
+  }
+}

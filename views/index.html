@@ -1,0 +1,131 @@
+<div class="container"> 
+    <div class="row"> 
+    <div class="col-md-2"></div> 
+
+        <div class="col-md-4 shadow overflows" style="border: 1px solid #7CBBF0  " > 
+            <div class="modal-body">
+                <div id="here">
+                {{#each users}}
+                    <div class="row shadow1 "  style="background-color: #F1F7F9;border-radius: 5px;" >
+                     
+                        <p style="padding: 10px">{{this.name}}</p> 
+                    </div>
+                    <br>
+                {{/each}}
+                </div> 
+            </div>
+        </div>
+
+        <input type="text" id="name" hidden value="{{user.name}}">
+        <input type="text" id="username" hidden value="{{user.username}}">
+        
+        <div class="col-md-5 col-sm-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading" id="accordion">
+                    <span class="glyphicon glyphicon-comment"></span> Chat
+                    <div class="btn-group pull-right">
+                        <a type="button" class="btn btn-default btn-xs" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                            <span class="glyphicon glyphicon-chevron-down"></span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="panel-collapse collapse in" id="collapseOne">
+                    <div class="panel-body overflow" id="messagewindows" >            
+                        <br>
+                        <div id="chat"></div>          
+                    </div>
+                    <div class="panel-footer clearfix">  
+                        <textarea id="textarea" class="form-control" placeholder="Enter your message and press enter..." required></textarea>
+                    </div>
+                </div>
+            </div> 
+        </div>  
+    </div>       
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+
+<script>
+var sts;
+(function(){
+    var element = function(id){
+        return document.getElementById(id);
+    }
+    // Get Elements 
+    var name = element('name');
+    var username = element('username'); 
+    // Connect to socket.io
+    try{
+        var socket = io();    
+    }
+    catch(err){
+        console.log(err.message)
+    }
+    // Check for connection
+    if(socket !== undefined){
+        console.log(socket);
+        console.log('Connected to socket...');       
+        // Handle Output
+        socket.on('output', function(data){
+            if(data.length){
+                for(var x = 0;x < data.length;x++){
+
+                    var div = document.createElement('div');
+                    div.setAttribute('style','background-color:#F3F9FA;width :250px;border-radius: 5px;');
+                    div.setAttribute('class','shadow1');
+                    var b = document.createElement("b");  
+                    var p = document.createElement("p"); 
+                    p.setAttribute('style','margin-left:50px');
+
+                    b.setAttribute('class','text-info');
+                    b.setAttribute('style','margin-left:20px');         // Create a <li> node
+                    var textnode = document.createTextNode(data[x].name); 
+                    var textnode1 = document.createTextNode(data[x].message);        // Create a text node
+                    b.appendChild(textnode);
+                    p.appendChild(textnode1); 
+                    div.appendChild(b);
+                    div.appendChild(p);
+                    var username1 = data[x].username;
+
+                    $(document).ready(function(){
+                        $('#messagewindows').animate({
+                        scrollTop: $('#messagewindows')[0].scrollHeight}, 1);
+                    });                          
+                    if('{{user.username}}' === username1){
+                         console.log("username : " + username1);
+                        div.setAttribute('style','margin-left:150px;background-color:#E1E8E8;border-radius: 5px;  ');
+
+                    }
+                    document.getElementById("chat").appendChild(div); 
+                    $( "#here" ).load(window.location.href + " #here" );
+                    textarea.value = ''; 
+                }
+            }//if end
+        });
+
+        socket.on('status', function(data){
+            // If status is clear, clear text
+            if(data.clear){
+                    textarea.value = '';
+                }
+        }); 
+        // Handle Input
+        textarea.addEventListener('keydown', function(event){
+            if(event.which === 13 && event.shiftKey == false){
+                // Emit to server input
+                socket.emit('input', {
+                    name:name.value,
+                    username : username.value,
+                    message : textarea.value        
+                });
+                event.preventDefault();
+            }
+        });
+       //end for one to many chat   
+    }
+
+})();
+
+</script>   
+
+
