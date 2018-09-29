@@ -11,8 +11,7 @@ This is a user login and registration,and Chat app using Node.js, Express, Passp
 
 ### Installation
 
-
-sh
+'sh'
 $ npm install
 
 
