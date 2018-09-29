@@ -8,12 +8,38 @@ This is a user login and registration,and Chat app using Node.js, Express, Passp
 
 ### Usage
     Chat Application
+    
+   
+### Installation required for app
 
-### Installation
 
-'sh'
+```sh
 $ npm install
+```
 
+```sh
+$ npm install express
+```
 
-sh
+```sh
+$ npm install angular
+```
+```sh
+$ npm install -g socket.io
+```
+
+```sh
+$ npm install supervisor -g
+```
+
+```sh
+$ npm install body-parser
+```
+
+```sh
+$ npm install mongoose
+```
+
+```sh
 $ npm start
+```
